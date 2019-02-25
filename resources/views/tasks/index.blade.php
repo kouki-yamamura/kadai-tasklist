@@ -4,6 +4,8 @@
 
 <h1>メッセージ一覧</h1>
 
+@if (Auth::check())
+    <h2>{{ Auth::user()->name }}さん　ようこそ！</h2>
     @if (count($tasks) > 0)
         <table class="table table-striped">
             <thead>
@@ -23,8 +25,17 @@
                 @endforeach
             </tbody>
         </table>
+        {{ $tasks->render('pagination::bootstrap-4') }}
     @endif
+        {!! link_to_route('tasks.create', '新規メッセージの投稿', null, ['class' => 'btn btn-primary']) !!}
+@else
+    <div class="center jumbotron">
+        <div class="text-center">
+            <h1>Welcome to the tasklist</h1>
+            {!! link_to_route('signup.get', 'Sign up now!', [], ['class' => 'btn btn-lg btn-primary']) !!}
+        </div>
+    </div>
+@endif 
     
-    {!! link_to_route('tasks.create', '新規メッセージの投稿', null, ['class' => 'btn btn-primary']) !!}
 
 @endsection

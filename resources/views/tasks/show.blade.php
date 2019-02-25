@@ -2,7 +2,9 @@
 
 @section('content')
 
- <h1>id = {{ $task->id }} のメッセージ詳細ページ</h1>
+@if(Auth::check())
+<h1>id = {{ Auth::user()->id }} のメッセージ詳細ページ</h1>
+
 
     <table class="table table-bordered">
         <tr>
@@ -24,5 +26,14 @@
     {!! Form::model($task, ['route' => ['tasks.destroy', $task->id], 'method' => 'delete']) !!}
         {!! Form::submit('削除', ['class' => 'btn btn-danger']) !!}
     {!! Form::close() !!}
+
+@else
+    <div class="center jumbotron">
+        <div class="text-center">
+            <h1>Welcome to the tasklist</h1>
+            {!! link_to_route('signup.get', 'Sign up now!', [], ['class' => 'btn btn-lg btn-primary']) !!}
+        </div>
+    </div>
+@endif 
 
 @endsection
